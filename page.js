@@ -26,6 +26,9 @@
             del:del
         };
     }])
+    .controller('BuiltInDirectivesController', ['$scope', function($scope){
+        $scope.items = ngs
+    }])
     .directive('listItems', [function () {
         return {
             restrict: 'EA',
@@ -94,6 +97,19 @@
                      '</form>'
         };
     }])
+    .directive('filterList',function(){
+        return {
+            restrict:'EA',
+            controller:function($scope){
+                $scope.items = ngs
+            },
+            template:''+
+                    '<p><input type="text" data-ng-model="queryFilter"></p>'+
+                    '<ul>'+
+                        '<li data-ng-repeat="item in items | filter:queryFilter">{{item}}</li>'+
+                    '</ul>'
+        }
+    })
     .directive("loadingIndicator", function () {
         return {
             restrict: "A",
@@ -110,3 +126,58 @@
         }})
     .config(function ($httpProvider) {$httpProvider.interceptors.push(function ($q, $rootScope) {return {'request': function (config) {$rootScope.$broadcast('loading-started');return config || $q.when(config);},'response': function (response) {$rootScope.$broadcast('loading-complete');return response || $q.when(response)}}})});
 })()
+
+
+
+var ngs = ['ngApp',
+                            'ngBind',
+                            'ngBindHtml',
+                            'ngBindTemplate',
+                            'ngBlur',
+                            'ngChange',
+                            'ngChecked',
+                            'ngClass',
+                            'ngClassEven',
+                            'ngClassOdd',
+                            'ngClick',
+                            'ngCloak',
+                            'ngController',
+                            'ngCopy',
+                            'ngCsp',
+                            'ngCut',
+                            'ngDblclick',
+                            'ngDisabled',
+                            'ngFocus',
+                            'ngForm',
+                            'ngHide',
+                            'ngHref',
+                            'ngIf',
+                            'ngInclude',
+                            'ngInit',
+                            'ngKeydown',
+                            'ngKeypress',
+                            'ngKeyup',
+                            'ngList',
+                            'ngModel',
+                            'ngModelOptions',
+                            'ngMousedown',
+                            'ngMouseenter',
+                            'ngMouseleave',
+                            'ngMousemove',
+                            'ngMouseover',
+                            'ngMouseup',
+                            'ngNonBindable',
+                            'ngOpen',
+                            'ngOptions',
+                            'ngPaste',
+                            'ngPluralize',
+                            'ngReadonly',
+                            'ngRepeat',
+                            'ngSelected',
+                            'ngShow',
+                            'ngSrc',
+                            'ngSrcset',
+                            'ngStyle',
+                            'ngSubmit',
+                            'ngSwitch',
+                            'ngTransclude ']

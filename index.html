@@ -19,7 +19,8 @@
                 <div class="col-md-12">
                     <accordion close-others="true">
                         <!-- DATA BINDING -->
-                        <accordion-group heading="Data Binding" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        <!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->
+                        <accordion-group heading="Data Binding" >
                             <p><alert data-ng-bind="modelBinding" type="info"></alert></p>
                             <input type="text" data-ng-model="modelBinding">
                         </accordion-group>
@@ -29,10 +30,20 @@
                             <p> <alert data-ng-if="!modelExpressionIsChecked" type="warning">Fail, Not Checked</alert></p>
                             <p><input type="checkbox" data-ng-model="modelExpressionIsChecked"></p>
                         </accordion-group>
+                        <!-- DIRECTIVES -->
+                        <accordion-group heading="Directives">
+                            <h1>Some Built in Directives</h1>
+                            <div data-ng-controller="BuiltInDirectivesController">
+                                <p data-ng-repeat="item in items">{{item}}</p>
+                            </div>
+                            </accordion-group>
+                        </accordion-group>
                         <!-- FILTERS -->
                         <accordion-group heading="Filters">
                             Filters
+                            <filter-list></filter-list>
                         </accordion-group>
+                        <h2>Crud Session</h2>
                         <accordion-group heading="Clientes">
                           <list-items-form table="clientes" models="name,email,celular" type-models="text,email,phone">Loading...</list-items-form>
                             <div class="divider"></div>
