@@ -10,17 +10,17 @@
         <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script><![endif]-->
     </head>
     <body>
-    <div loading-indicator class="col-md-12"></div>
         <div id='col-md-12'>
+            <div loading-indicator class="col-md-12"></div>
             <article>
                 <header>
                     <h2>MultConnect | AngularJS</h2>
                 </header>
-                <div class="col-md-12">
+                <div class="col-md-12" id="wrapper">
                     <accordion close-others="true">
                         <!-- DATA BINDING -->
                         <!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->
-                        <accordion-group heading="Data Binding" >
+                        <accordion-group heading="Data Binding">
                             <p><alert data-ng-bind="modelBinding" type="info"></alert></p>
                             <input type="text" data-ng-model="modelBinding">
                         </accordion-group>
@@ -33,7 +33,7 @@
                         <!-- DIRECTIVES -->
                         <accordion-group heading="Directives">
                             <h1>Some Built in Directives</h1>
-                            <div data-ng-controller="BuiltInDirectivesController">
+                            <div data-ng-controller="BuiltInDirectivesController" max-height="100px">
                                 <p data-ng-repeat="item in items">{{item}}</p>
                             </div>
                             </accordion-group>
@@ -41,19 +41,25 @@
                         <!-- FILTERS -->
                         <accordion-group heading="Filters">
                             Filters
-                            <filter-list></filter-list>
+                            <filter-list ></filter-list>
                         </accordion-group>
+                        <!-- CRUD com AZURE -->
                         <h2>Crud Session</h2>
-                        <accordion-group heading="Clientes">
-                          <list-items-form table="clientes" models="name,email,celular" type-models="text,email,phone">Loading...</list-items-form>
-                            <div class="divider"></div>
-                            <list-items table="clientes"></list-items>
-                        </accordion-group>
-                        <accordion-group heading="Pedidos">
-                            <list-items-form table="pedidos" models="name" type-models="text">Loading...</list-items-form>
-                            <div class="divider"></div>
-                            <list-items table="pedidos"></list-items>
-                        </accordion-group>
+                        <div class="col-md-6">
+                        <acoordion close-others="false">
+                            <accordion-group heading="Pedidos">
+                                <list-items-form table="pedidos" models="name" type-models="text">Loading...</list-items-form>
+                                <div class="divider"></div>
+                                <list-items table="pedidos"></list-items>
+                            </accordion-group>
+                        </div>
+                        <div class="col-md-6">
+                            <accordion-group heading="Clientes">
+                              <list-items-form table="clientes" models="name,email,celular" type-models="text,email,phone">Loading...</list-items-form>
+                                <div class="divider"></div>
+                                <list-items table="clientes"></list-items>
+                            </accordion-group>
+                        </div>
                     </accordion>
                 </div>
             </article>

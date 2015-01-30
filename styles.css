@@ -6,7 +6,7 @@ button:hover { background-color: white; }
 input[type=text], input:not([type]) { padding: 0 10px; text-overflow: ellipsis; }
 
 /* Main page structure and masthead style */
-#wrapper { max-width: 800px; margin: auto; padding: 20px; }
+#wrapper { margin: auto; padding: 20px; }
 article { background-color: white; box-shadow: 0 0 12px rgba(0, 0, 0, 0.75); border-radius: 10px; }
 header { background-color: #71BCFA; padding: 20px; border-top-left-radius: 10px; border-top-right-radius: 10px; }
 header h1 { text-transform: uppercase; font-weight: normal; color: #545353; font-size: 28px; }
@@ -18,6 +18,7 @@ footer { text-align: center; font-size: 0.8em; margin-top: 20px; }
 footer a { color: #666; display: block; }
 #errorlog { color: red; font-weight: bold; padding: 8px; display: inline-block; text-align: left; }
 
-.divider{
-	height: 25px
-}
+.alert:hover{cursor: pointer}
+.divider{height: 25px}
+[max-height]{overflow: auto;}
+[max-height="100px"]{height: 100px;}

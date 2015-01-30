@@ -16,7 +16,9 @@
             return table.del({id:item.id})
         }
         var update = function(table,item){
-
+            delete item.$$hashKey
+            var table = client.getTable(table);
+            return table.update(item);
         }
         return {
             client:client,
@@ -49,11 +51,14 @@
               $scope.remove = function(item){
                     azureConfig.del($scope.table,item).then($scope.load)
               }
+              $scope.updateThis = function(item){
+                    $scope.$emit('update-item',item)
+              }            
               $scope.$on('refresh-items',$scope.load)
             },
             template:'<div class="">'+
                         '<h3>{{table}}</h3>'+
-                        '<alert ng-repeat="item in items" type="success" close="remove(item)">{{item.name}}</alert>'+
+                        '<alert ng-repeat="item in items" type="success" close="remove(item)">{{item.name}} <span class="glyphicon glyphicon-pencil" data-ng-click="updateThis(item)"></span></alert>'+
                         '<alert data-ng-if="!items.length" type="info">Nenhum registro</alert>'+
                     '</div>'
         };
@@ -69,20 +74,46 @@
             },
             controller:function($scope,azureConfig){
                 $scope.item = {}
+                $scope.addNew = false
+                $scope.$on('update-item',function(currentScope,item){
+                    $scope.item = item
+                    $scope.addADD(true)
+                    $scope.update=true
+                })
+                $scope.addADD = function(bool){
+                    if(bool){
+                        $scope.addNew = true
+                        $scope.update = false
+                    }
+                    else{
+                        $scope.item = {}
+                        $scope.addNew = false
+                    }
+                }
                 $scope.reset = function(form) {
                     if (form) {
                       form.$setPristine();
                       form.$setUntouched();
                     }
                 };
+                $scope.refresh = function(item){
+                    $scope.$emit('refresh-items',item)
+                    $scope.addADD(false)
+                }
                 $scope.insert = function(item){
-                    azureConfig.insert($scope.table,item).then(function(item){
-                        $scope.$emit('refresh-items',item)
-                        $scope.item = {}
-                    })
+                    var request
+                    if($scope.update){
+                        request = azureConfig.update($scope.table,item)
+                    }else{
+                        request = azureConfig.insert($scope.table,item)
+                    }
+                    request.then($scope.refresh)
                 }
             },
-            template:'<form name="form" novalidate class="col-md-12">'+
+            template:''+
+                    '<button class="btn btn-primary" data-ng-if="!addNew" data-ng-click="addADD(true)">Add new</button>'+
+                    '<button class="btn btn-primary" data-ng-if="addNew" data-ng-click="addADD(false)">Cancel</button>'+
+                    '<form name="form" novalidate class="col-md-12" data-ng-if="addNew">'+
                         '<div class="form-group" data-ng-repeat="model in models">'+
                            '<label class="control-label" for="{{model}}">{{model}}</label>'+
                            '<div class="controls class="col-md-12"">'+
@@ -92,8 +123,8 @@
                         '<div ng-if="!form.$valid">'+
                            'Há algo errado com o formulario'+
                         '</div>'+
-                        '<input type="button" class="btn btn-primary" ng-click="reset(form)" value="Reset" />'+
-                        '<input type="submit" data-ng-if="form.$valid && form.$dirty" class="btn btn-primary" ng-click="insert(item)" value="Save" />'+
+                        '<input type="button" data-ng-if="form.$dirty" class="btn btn-primary" ng-click="reset(form)" value="Reset" />'+
+                        '<input type="submit" data-ng-if="form.$valid && form.$dirty || update" class="btn btn-primary" ng-click="insert(item)" value="Save" />'+
                      '</form>'
         };
     }])
@@ -105,9 +136,15 @@
             },
             template:''+
                     '<p><input type="text" data-ng-model="queryFilter"></p>'+
-                    '<ul>'+
+                    '<ul max-height="100px">'+
                         '<li data-ng-repeat="item in items | filter:queryFilter">{{item}}</li>'+
                     '</ul>'
+        }
+    })
+    .filter('customFilter',function(){
+        return function(items,expression,comparador){
+            //logica aqui
+            return items
         }
     })
     .directive("loadingIndicator", function () {
@@ -124,7 +161,20 @@
 
             }
         }})
-    .config(function ($httpProvider) {$httpProvider.interceptors.push(function ($q, $rootScope) {return {'request': function (config) {$rootScope.$broadcast('loading-started');return config || $q.when(config);},'response': function (response) {$rootScope.$broadcast('loading-complete');return response || $q.when(response)}}})});
+    .config(function ($httpProvider) {
+        $httpProvider.interceptors.push(function ($q, $rootScope) {
+            return {
+                'request': function (config) {
+                    $rootScope.$broadcast('loading-started');
+                    return config || $q.when(config);
+                },
+                'response': function (response) {
+                    $rootScope.$broadcast('loading-complete');
+                    return response || $q.when(response)
+                }
+            }
+        })
+    });
 })()
 
 
