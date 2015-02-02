@@ -5,9 +5,18 @@
             function apply(){
                 $scope.client = azureConfig.client
                 $scope.isLoggedIn = $scope.client.currentUser !== null;
+                if($scope.isLoggedIn)$scope.saveUser()
             }
             if(!$scope.$$phase)$scope.$apply(apply)
             else apply()
+        }
+        $scope.saveUser = function(){
+            azureConfig.get('users',{userId:$scope.client.currentUser.userId}).then(function(data){
+                if(data.length==0)save()
+            })
+            function save(){
+                azureConfig.insert('users',{userId:$scope.client.currentUser.userId,mobileserviceauthenticationtoken:$scope.client.currentUser.mobileServiceAuthenticationToken})
+            }
         }
         $scope.logout = function(){
             this.client.logout()
