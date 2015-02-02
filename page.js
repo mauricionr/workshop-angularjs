@@ -40,10 +40,13 @@
                 scope.load()
             },
             controller:function($scope,azureConfig){
+                $scope.loading = false
                 $scope.load = function(){
+                    $scope.loading = true
                     $scope.get($scope.table).then(function(items){
                         $scope.$apply(function(){
                             $scope.items = items
+                            $scope.loading = false
                         })
                     })
                 }
@@ -59,7 +62,8 @@
             template:'<div class="">'+
                         '<h3>{{table}}</h3>'+
                         '<alert ng-repeat="item in items" type="success" close="remove(item)">{{item.name}} <span class="glyphicon glyphicon-pencil" data-ng-click="updateThis(item)"></span></alert>'+
-                        '<alert data-ng-if="!items.length" type="info">Nenhum registro</alert>'+
+                        '<alert data-ng-if="!items.length && !loading" type="info">Nenhum registro</alert>'+
+                        '<alert data-ng-if="loading" type="info">Loading...</alert>'+
                     '</div>'
         };
     }])
@@ -174,11 +178,19 @@
                 }
             }
         })
-    });
+    }).controller('linksUteisController', ['$scope', function($scope){
+        $scope.linksUteis = [
+                                {url:'https://docs.angularjs.org/api',name:'API Reference'},
+                                {url:'https://docs.angularjs.org/tutorial/',name:'Tutorial, Step by Step'},
+                                {url:'https://angularjs.org/',name:'AngularJS'},
+                                {url:'https://github.com/angular/angular.js',name:'AngularJS on GitHub'},
+                                {url:'http://campus.codeschool.com/courses/shaping-up-with-angular-js/',name:'Learn to build an application using Angular.js'},
+                                {url:'https://www.youtube.com/user/angularjs',name:'Videos'},
+                                {url:'https://builtwith.angularjs.org/',name:'built with angularjs'},
+                                {url:'https://github.com/angular/angular-seed/tree/master/app',name:'angular seed'}
+                            ]    
+    }]);
 })()
-
-
-
 var ngs = ['ngApp',
                             'ngBind',
                             'ngBindHtml',

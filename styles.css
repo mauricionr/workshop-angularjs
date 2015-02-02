@@ -18,6 +18,8 @@ footer { text-align: center; font-size: 0.8em; margin-top: 20px; }
 footer a { color: #666; display: block; }
 #errorlog { color: red; font-weight: bold; padding: 8px; display: inline-block; text-align: left; }
 
+header h2 {text-align: center;}
+
 .alert:hover{cursor: pointer}
 .divider{height: 25px}
 [max-height]{overflow: auto;}

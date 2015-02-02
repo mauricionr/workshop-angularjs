@@ -14,15 +14,24 @@
             <div loading-indicator class="col-md-12"></div>
             <article>
                 <header>
-                    <h2>MultConnect | AngularJS</h2>
+                    <h2>MultConnect | AngularJS <img src="https://angularjs.org/img/AngularJS-small.png" alt="Angularjs"></h2>
                 </header>
-                <div class="col-md-12" id="wrapper">
-                    <accordion close-others="true">
+                <div class="col-md-2" id="wrapper">
+                    <accordion>
+                        <accordion-group heading="Links uteis" is-open="true">
+                            <div data-ng-controller="linksUteisController">
+                                <p data-ng-repeat="link in linksUteis"><a href="{{link.url}}" target="_blank">{{link.name}}</a></p>
+                            </div>
+                        </accordion-group>
+                    </accordion>
+                </div>
+                <div class="col-md-10" id="wrapper">
+                    <accordion close-others="false">
                         <!-- DATA BINDING -->
                         <!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->
                         <accordion-group heading="Data Binding">
                             <p><alert data-ng-bind="modelBinding" type="info"></alert></p>
-                            <input type="text" data-ng-model="modelBinding">
+                            <input type="text" data-ng-model="modelBinding" data-ng-init="modelBinding = 'Hello World'">
                         </accordion-group>
                         <!-- EXPRESSIONS -->
                         <accordion-group heading="Expressions">
@@ -44,17 +53,17 @@
                             <filter-list ></filter-list>
                         </accordion-group>
                         <!-- CRUD com AZURE -->
-                        <h2>Crud Session</h2>
+                        <h2>Crud com azure</h2>
                         <div class="col-md-6">
-                        <acoordion close-others="false">
-                            <accordion-group heading="Pedidos">
+                        <acoordion>
+                            <accordion-group heading="Pedidos" is-open="true">
                                 <list-items-form table="pedidos" models="name" type-models="text">Loading...</list-items-form>
                                 <div class="divider"></div>
                                 <list-items table="pedidos"></list-items>
                             </accordion-group>
                         </div>
                         <div class="col-md-6">
-                            <accordion-group heading="Clientes">
+                            <accordion-group heading="Clientes" is-open="true">
                               <list-items-form table="clientes" models="name,email,celular" type-models="text,email,phone">Loading...</list-items-form>
                                 <div class="divider"></div>
                                 <list-items table="clientes"></list-items>
