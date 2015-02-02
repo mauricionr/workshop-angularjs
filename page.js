@@ -1,5 +1,23 @@
 (function(){
     angular.module('app',['ui.bootstrap'])
+    .controller('authController', ['$scope','azureConfig', function($scope,azureConfig){
+        function refreshUser(){
+            function apply(){
+                $scope.client = azureConfig.client
+                $scope.isLoggedIn = $scope.client.currentUser !== null;
+            }
+            if(!$scope.$$phase)$scope.$apply(apply)
+            else apply()
+        }
+        $scope.logout = function(){
+            this.client.logout()
+            refreshUser()
+        }
+        $scope.login = function(){
+            this.client.login('microsoftaccount').then(refreshUser).done(refreshUser)
+        }
+        refreshUser()
+    }])
     .factory('azureConfig', [function () {
         var client = new WindowsAzure.MobileServiceClient('https://mcvclicenciamento.azure-mobile.net/', 'GfnDwsbCakIOvLUBpvCIXaVIgdIgrr58') 
         var get = function(table,query){

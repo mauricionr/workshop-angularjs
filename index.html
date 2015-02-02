@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
         <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script><![endif]-->
     </head>
-    <body>
+    <body data-ng-controller="authController">
         <div id='col-md-12'>
             <div loading-indicator class="col-md-12"></div>
             <article>
@@ -17,6 +17,10 @@
                     <h2>MultConnect | AngularJS <img src="https://angularjs.org/img/AngularJS-small.png" alt="Angularjs"></h2>
                 </header>
                 <div class="col-md-2" id="wrapper">
+                    <div >
+                        <a data-ng-if="!isLoggedIn" href="javascript:;"data-ng-click="login()">login</a>
+                        <a data-ng-if="isLoggedIn" href="javascript:;"data-ng-click="logout()">logout</a>
+                    </div>
                     <accordion>
                         <accordion-group heading="Links uteis" is-open="true">
                             <div data-ng-controller="linksUteisController">
@@ -25,7 +29,7 @@
                         </accordion-group>
                     </accordion>
                 </div>
-                <div class="col-md-10" id="wrapper">
+                <div class="col-md-10" id="wrapper" data-ng-if="isLoggedIn">
                     <accordion close-others="false">
                         <!-- DATA BINDING -->
                         <!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->
