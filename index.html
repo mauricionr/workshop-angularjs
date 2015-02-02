@@ -16,7 +16,7 @@
                 <header>
                     <h2>Mult-Connect |  <img src="https://angularjs.org/img/AngularJS-small.png" alt="Angularjs"></h2>
                 </header>
-                <div class="col-md-2" id="wrapper">
+                <div class="col-md-3" id="wrapper">
                     <div >
                         <a data-ng-if="!isLoggedIn" href="javascript:;"data-ng-click="login()">login</a>
                         <a data-ng-if="isLoggedIn" href="javascript:;"data-ng-click="logout()">logout</a>
@@ -24,12 +24,15 @@
                     <accordion>
                         <accordion-group heading="Links uteis" is-open="true">
                             <div data-ng-controller="linksUteisController">
+                                <h3>Angular links</h3>
                                 <p data-ng-repeat="link in linksUteis"><a href="{{link.url}}" target="_blank">{{link.name}}</a></p>
+                                <h3>Related Links</h3>
+                                <p data-ng-repeat="link in relatedLinks"><a href="{{link.url}}" target="_blank">{{link.name}}</a></p>
                             </div>
                         </accordion-group>
                     </accordion>
                 </div>
-                <div class="col-md-10" id="wrapper" data-ng-if="isLoggedIn">
+                <div class="col-md-9" id="wrapper" data-ng-if="isLoggedIn">
                     <accordion close-others="false">
                         <!-- DATA BINDING -->
                         <!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->

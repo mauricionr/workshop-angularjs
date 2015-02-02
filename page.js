@@ -215,7 +215,11 @@
                                 {url:'https://www.youtube.com/user/angularjs',name:'Videos'},
                                 {url:'https://builtwith.angularjs.org/',name:'built with angularjs'},
                                 {url:'https://github.com/angular/angular-seed/tree/master/app',name:'angular seed'}
-                            ]    
+                            ]
+        $scope.relatedLinks = [
+                                {url:'http://aurelia.io/',name:'aurelia'},
+                                {url:'https://www.polymer-project.org/',name:'polymer'}
+                            ]
     }]);
 })()
 var ngs = ['ngApp',
