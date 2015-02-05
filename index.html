@@ -166,9 +166,9 @@ A service that helps you run functions asynchronously, and use their return valu
             var alldata = []
             for(var url in urls){
                 calls.push($http.get(urls[url]).success(function(data){
-                    mydata.push(data)
+                    alldata.push(data)
                 },function(data){
-                    mydata.push({})
+                    alldata.push({})
                 }))
             }
             $q.all(calls).then(function(){
