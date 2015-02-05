@@ -16,13 +16,17 @@
                 <header>
                     <h2>Mult-Connect |  <img src="https://angularjs.org/img/AngularJS-small.png" alt="Angularjs"></h2>
                 </header>
-                <div class="col-md-3" id="wrapper">
-                    <div >
-                        <a data-ng-if="!isLoggedIn" href="javascript:;"data-ng-click="login()">login</a>
-                        <a data-ng-if="isLoggedIn" href="javascript:;"data-ng-click="logout()">logout</a>
-                    </div>
-                    <accordion>
-                        <accordion-group heading="Links uteis" is-open="true">
+                <div class="col-md-12 pull-right">
+                        <a data-ng-if="!isLoggedIn" class="btn btn-default" href="javascript:;"data-ng-click="login()">login</a>
+                        <a data-ng-if="isLoggedIn" class="btn btn-default" href="javascript:;"data-ng-click="logout()">logout</a>
+                </div>
+                <div class="col-md-3" id="wrapper" data-ng-if="isLoggedIn">
+                    <accordion close-others="true">
+                        <accordion-group heading="Best Practice">
+                            <alert type="success">It's recommended to use the <strong>"directive definition object"</strong> form.</alert>
+                            <alert type="success"><a href="https://github.com/johnpapa/angularjs-styleguide">johnpapa angularjs styleguide</a></alert>
+                        </accordion-group>
+                        <accordion-group heading="Links uteis" is-open="false">
                             <div data-ng-controller="linksUteisController">
                                 <h3>Angular links</h3>
                                 <p data-ng-repeat="link in linksUteis"><a href="{{link.url}}" target="_blank">{{link.name}}</a></p>
@@ -33,49 +37,350 @@
                     </accordion>
                 </div>
                 <div class="col-md-9" id="wrapper" data-ng-if="isLoggedIn">
-                    <accordion close-others="false">
+                    <accordion close-others="true">
+                        <accordion-group heading="Start">
+<pre class="ng-scope"><code class="lang-html"><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
+    </span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">lang</span><span class="pun">=</span><span class="atv">"en"</span><span class="pln"> </span><span class="atn">data-ng-app="app"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;head&gt;</span><span class="pln">
+      </span><span class="tag">&lt;meta</span><span class="pln"> </span><span class="atn">charset</span><span class="pun">=</span><span class="atv">"utf-8"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;title&gt;</span><span class="pln">My HTML File</span><span class="tag">&lt;/title&gt;</span><span class="pln">
+      </span><span class="tag">&lt;link</span><span class="pln"> </span><span class="atn">rel</span><span class="pun">=</span><span class="atv">"stylesheet"</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"bower_components/bootstrap/dist/css/bootstrap.css"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;link</span><span class="pln"> </span><span class="atn">rel</span><span class="pun">=</span><span class="atv">"stylesheet"</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"css/app.css"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;body&gt;</span><span class="pln">
+
+      </span><span class="tag">&lt;p&gt;</span><span class="pln">Nothing here {{'yet' + '!'}}</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+
+    </span>
+    <span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"bower_components/angular/angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/html&gt;</span></code></pre>
+                        </accordion-group>
                         <!-- DATA BINDING -->
                         <!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->
                         <accordion-group heading="Data Binding">
+                            <a href="https://docs.angularjs.org/guide/databinding">Data binding</a>
                             <p><alert data-ng-bind="modelBinding" type="info"></alert></p>
                             <input type="text" data-ng-model="modelBinding" data-ng-init="modelBinding = 'Hello World'">
                         </accordion-group>
                         <!-- EXPRESSIONS -->
                         <accordion-group heading="Expressions">
+                            <a href="https://docs.angularjs.org/guide/expression">Expressions</a>
                             <p> <alert data-ng-if="modelExpressionIsChecked" type="success">Ok, Checked</alert></p>
                             <p> <alert data-ng-if="!modelExpressionIsChecked" type="warning">Fail, Not Checked</alert></p>
                             <p><input type="checkbox" data-ng-model="modelExpressionIsChecked"></p>
                         </accordion-group>
+                        <!-- CONTROLLERS -->
+                        <accordion-group heading="Controller">
+                            <a href="https://docs.angularjs.org/guide/controller">controller</a>
+                            <pre>
+                                <code>
+JS
+var myApp = angular.module('myApp',[]);
+
+myApp.controller('GreetingController', ['$scope', function($scope) {
+  $scope.greeting = 'Hola!';
+}]);
+
+HTML
+div ng-controller="GreetingController"
+  <span ng-non-bindable>{{ greeting }}</span>
+div
+                                </code>
+                            </pre>
+                        </accordion-group>
                         <!-- DIRECTIVES -->
                         <accordion-group heading="Directives">
-                            <h1>Some Built in Directives</h1>
+                            <h1><a href="https://docs.angularjs.org/api/ng/directive">Directives components in ng</a></h1>
                             <div data-ng-controller="BuiltInDirectivesController" max-height="100px">
                                 <p data-ng-repeat="item in items">{{item}}</p>
                             </div>
                             </accordion-group>
                         </accordion-group>
+                        <!-- directive definition object -->
+                        <accordion-group heading="Directive Definition Object">
+                            <a href="https://docs.angularjs.org/api/ng/service/$compile">$compile</a>
+                                <pre>
+                                    <code>
+var myModule = angular.module(...);
+
+myModule.directive('directiveName', function factory(injectables) {
+  var directiveDefinitionObject = {
+    priority: 0,
+    template: 'html', // or // function(tElement, tAttrs) { ... },
+    // or
+    // templateUrl: 'directive.html', // or // function(tElement, tAttrs) { ... },
+    transclude: false,
+    restrict: 'A',
+    templateNamespace: 'html',
+    scope: false,
+    controller: function($scope, $element, $attrs, $transclude, otherInjectables) { ... },
+    controllerAs: 'stringAlias',
+    require: 'siblingDirectiveName', // or // ['^parentDirectiveName', '?optionalDirectiveName', '?^optionalParent'],
+    compile: function compile(tElement, tAttrs, transclude) {
+      return {
+        pre: function preLink(scope, iElement, iAttrs, controller) { ... },
+        post: function postLink(scope, iElement, iAttrs, controller) { ... }
+      }
+      // or
+      // return function postLink( ... ) { ... }
+    },
+    // or
+    // link: {
+    //  pre: function preLink(scope, iElement, iAttrs, controller) { ... },
+    //  post: function postLink(scope, iElement, iAttrs, controller) { ... }
+    // }
+    // or
+    // link: function postLink( ... ) { ... }
+  };
+  return directiveDefinitionObject;
+}); 
+                                    </code>    
+                                </pre>
+                        </accordion-group>
                         <!-- FILTERS -->
                         <accordion-group heading="Filters">
-                            Filters
+                            <a href="https://docs.angularjs.org/api/ng/service/$filter">$filter</a>
                             <filter-list ></filter-list>
                         </accordion-group>
-                        <!-- CRUD com AZURE -->
-                        <h2>Crud com azure</h2>
-                        <div class="col-md-6">
-                        <acoordion>
-                            <accordion-group heading="Pedidos" is-open="true">
-                                <list-items-form table="pedidos" models="name" type-models="text">Loading...</list-items-form>
-                                <div class="divider"></div>
-                                <list-items table="pedidos"></list-items>
-                            </accordion-group>
+                        <accordion-group heading="Q">
+                        <p><a href="https://docs.angularjs.org/api/ng/service/$q">$q</a></p>
+<p>- service in module ng
+A service that helps you run functions asynchronously, and use their return values (or exceptions) when they are done processing.</p>
+<code>
+    <pre>
+
+        //$q.when
+        var call = $http.get('/api/contatos')
+        $q.when(call).then(success,error)
+        //$q.all
+        var calls = []
+        for(var url in urls){
+            calls.push($http.get(urls[url]))
+        }
+        $q.all(calls).then(success,error)
+        //promise function
+        var promise = function(){
+            var $q.defer();
+            var calls = [];
+            var alldata = []
+            for(var url in urls){
+                calls.push($http.get(urls[url]).success(function(data){
+                    mydata.push(data)
+                },function(data){
+                    mydata.push({})
+                }))
+            }
+            $q.all(calls).then(function(){
+                defer.resolve(alldata)
+            },function(){
+                defer.reject('ERROR')
+            })
+            return defer.promise
+        }
+
+    </pre>
+</code>
+                        </accordion-group>
+                        <accordion-group heading="http">
+                        <a href="https://docs.angularjs.org/api/ng/service/$http">$http</a>
+                        <div></div>
+                        <code>
+                            <pre>
+this.getClassDocFiles = function ($scope, $rootScope, type) {
+var defer = $q.defer()
+$http.get(_spPageContextInfo.webAbsoluteUrl + "/_api/web/getfolderbyserverrelativeurl('" + _spPageContextInfo.webServerRelativeUrl + "/Lists/" + $scope.list + "/" + $rootScope.classID + "/" + type + "/')/Files?$expand=FieldValuesAsHtml").success(function (data) {
+    defer.resolve(data)
+}).error(function (data, status, headers, config) {
+    defer.reject(data)
+});
+return defer.promise
+}
+                            </pre>
+                        </code>
+                        </accordion-group>
+                        <accordion-group heading="Provide">
+                        <h1><a href="https://docs.angularjs.org/api/auto/service/$provide">$provide</a></h1>
+                        <p>var module1 = angular.module('moduleName',['moduloAdicional'])</p>
+                        <p>module1.constant(obj) - registers a value/object that can be accessed by providers and services.</p>
+                        <p>module1.value(obj) - registers a value/object that can only be accessed by services, not providers.</p>
+                        <p>module1.factory(fn) - registers a service factory function, fn, that will be wrapped in a service provider object, whose $get property will contain the given factory function.</p>
+                        <p>module1.service(class) - registers a constructor function, class that will be wrapped in a service provider object, whose $get property will instantiate a new object using the given constructor function.</p>
+                        </accordion-group>
+                        <accordion-group heading="Factory">
+                        <p><a href="https://docs.angularjs.org/api/auto/service/$provide#factory">factory(name, $getFn);</a></p>
+                        <p>Register a service factory, which will be called to return the service instance. This is short for registering a service where its provider consists of only a $get property, which is the given service factory function. You should use $provide.factory(getFn) if you do not need to configure your service in a provider.</p>
+                        <div>
+                            Exemplo
                         </div>
-                        <div class="col-md-6">
-                            <accordion-group heading="Clientes" is-open="true">
-                              <list-items-form table="clientes" models="name,email,celular" type-models="text,email,phone">Loading...</list-items-form>
-                                <div class="divider"></div>
-                                <list-items table="clientes"></list-items>
-                            </accordion-group>
-                        </div>
+                        <code>
+                            <pre>
+app.factory('peoplePickerEvents', function () {
+    function initPeoplePickerEvent() {
+        var _self = this
+        var container = $('[data-ng-view]')
+        _self.resetClass()
+        container.on('focus', '.sp-peoplepicker-editorInput', function () {
+            var elem = $(this).closest('.md-input-group')
+            _self.addOrRemoveClass(true, $(elem), 'md-input-focused')
+        })
+        container.on('blur', '.sp-peoplepicker-editorInput', function () {
+            var elem = $(this).closest('.md-input-group')
+            _self.addOrRemoveClass(false, elem, 'md-input-focused')
+            var add;
+            if (_self.checkHasValue(elem)) {
+                add = true
+            } else {
+                add = false
+            }
+            _self.addOrRemoveClass(add, elem, 'md-input-has-value')
+        })
+    }
+    function addOrRemoveClass(add, elem, classe) {
+        if (add) elem.addClass(classe)
+        else elem.removeClass(classe)
+    }
+    function resetClass(elem) {
+        var classe = 'md-input-focused'
+        if (!elem) {
+            var peoplePickers = $('.sp-peoplepicker-editorInput')
+            angular.forEach(peoplePickers, function (key, index) {
+                $(key).closest('div').find('.ms-helperText').text("")
+                $(key).closest('.md-input-group').removeClass(classe)
+            })
+        } else {
+            elem.removeClass(classe)
+        }
+    }
+    function checkHasValue(elem) {
+        var result = eval(elem.closest('div').find('[type="hidden"]').val())
+        if (result)
+            return typeof result != 'string' ? result.length ? result.length > 0 ? true : false : false : false
+        else
+            return false
+    }
+    return {
+        addOrRemoveClass: addOrRemoveClass,
+        checkHasValue: checkHasValue,
+        resetClass: resetClass,
+        initPeoplePickerEvent: initPeoplePickerEvent
+    }
+})
+                            </pre>
+                        </code>
+                        </accordion-group>
+                        <accordion-group heading="Services">
+                            <p><a href="https://docs.angularjs.org/api/auto/service/$provide#service">service(name, constructor);</a></p>
+                            <p>Register a service constructor, which will be invoked with new to create the service instance. This is short for registering a service where its provider's $get property is the service constructor function that will be used to instantiate the service instance.
+                            You should use $provide.service(class) if you define your service as a type/class.</p>
+                            <div>Example</div>
+                            <code>
+                                <pre>
+app.service('SharePointService', ['$q', 'peoplePickerEvents', 'nowWithNoTime', '$http', 'SharePointSecurityService', '$log', function (
+    $q,
+    peoplePickerEvents,
+    nowWithNoTime,
+    $http,
+    SharePointSecurityService,
+    $log) {
+    this.restGetCurrentUser = function () {
+        var deferred = $q.defer();
+        var hostweburl = SharePointSecurityService.siteurl();
+        var restQueryUrl = _spPageContextInfo.webAbsoluteUrl + "/_api/SP.AppContextSite(@target)/web/currentUser?@target='" + hostweburl + "'&$expand=Groups/Users";
+        var executor = new SP.RequestExecutor(SharePointSecurityService.appweburl());
+        executor.executeAsync({
+            url: restQueryUrl,
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" },
+            success: function (data, textStatus, xhr) {
+                deferred.resolve(JSON.parse(data.body));
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                deferred.reject(JSON.stringify(xhr));
+            }
+        });
+        return deferred.promise;
+    };
+})
+</pre>
+                            </code>
+                        </accordion-group>
+                        <accordion-group heading="Resource">
+                            <a href="https://docs.angularjs.org/api/ngResource/service/$resource">Resource</a>
+                            <p>$resource(url, [paramDefaults], [actions], options);</p>
+                            <pre>
+                                <code>
+app.factory('List', ['$resource', function ($resource) {
+return $resource(_spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle(':listName')/items?:odata", null,
+        {
+            'update': {
+                method: 'PUT'
+            }
+        });
+}]);
+app.factory('ListItem', ['$resource', function ($resource) {
+    return $resource(_spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle(':listName')/items(:itemID)", null,
+        {
+            'update': {
+                method: 'POST', headers: {
+                    "IF-MATCH": "*",
+                    "content-type": "application/json;odata=verbose",
+                    "X-HTTP-Method": "MERGE",
+                    "X-RequestDigest": document.querySelector("#__REQUESTDIGEST").value
+                }
+            }
+        });
+}]);
+                                </code>
+                            </pre>
+                            <div></div>
+                            <pre>
+                                <code>
+app.directive('inactiveClasses', function () {
+    return {
+        restrict: 'AE',
+        scope: {},
+        controller: function ($scope, List, ListItem, $location) {
+            $scope.classes = List.get({ listName: mclNames.Class, odata: '$filter=mcactive eq 0' })
+            $scope.classes.$promise.then(function (data) {
+                $scope.items = data.value
+            });
+            $scope.ativarClass = function (item) {
+                function removeNull(item) {
+                    for (var key in item) {
+                        item[key] == null ? delete item[key] : item[key];
+                    }
+                }
+                $scope.itemsParams = { listName: mclNames.Class, itemID: item.ID }
+                $scope.class = ListItem.get($scope.itemsParams).$promise.then(function (data) {
+                    $scope.class = data;
+                    removeNull($scope.class)
+                    $scope.class['__metadata'] = { 'type': 'SP.Data.MclClassListItem' }
+                    $scope.class.mcactive = true
+                    $scope.class.$update($scope.itemsParams, function () {
+                        $location.path('/')
+                    })
+                })
+            }
+        },
+        template: 'html'
+    }
+})
+                                </code>
+                            </pre>
+                        </accordion-group>
+                        <accordion-group heading="Pedidos">
+                            <h1>Crud com azure</h1>
+                            <list-items-form table="pedidos" models="name" type-models="text">Loading...</list-items-form>
+                            <div class="divider"></div>
+                            <list-items table="pedidos"></list-items>
+                        </accordion-group>
+                        <accordion-group heading="Clientes">
+                            <h1>Crud com azure</h1>
+                          <list-items-form table="clientes" models="name,email,celular" type-models="text,email,phone">Loading...</list-items-form>
+                            <div class="divider"></div>
+                            <list-items table="clientes"></list-items>
+                        </accordion-group>
                     </accordion>
                 </div>
             </article>
