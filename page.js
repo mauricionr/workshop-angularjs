@@ -97,11 +97,12 @@
     .directive('listItemsForm', [function () {
         return {
             restrict: 'EA',
-            require:['?models','?typeModels','?table'],
+            require:['?models','?typeModels','?table','?caminho'],
             link:function(scope,element,attr){
                 scope.models = attr.models.split(',')
                 scope.typeModels = attr.typeModels.split(',')
                 scope.table = attr.table
+                scope.caminho = attr.caminho
             },
             controller:function($scope,azureConfig){
                 $scope.item = {}
@@ -178,6 +179,9 @@
             return items
         }
     })
+    .controller('MyController', ['', function(){
+        
+    }])
     .directive("loadingIndicator", function () {
         return {
             restrict: "A",

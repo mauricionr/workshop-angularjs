@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
         <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script><![endif]-->
     </head>
-    <body data-ng-controller="authController">
+    <body data-ng-controller="authController" data-ng-cloak>
         <div id='col-md-12'>
             <div loading-indicator class="col-md-12"></div>
             <article>
@@ -20,7 +20,7 @@
                         <a data-ng-if="!isLoggedIn" class="btn btn-default" href="javascript:;"data-ng-click="login()">login</a>
                         <a data-ng-if="isLoggedIn" class="btn btn-default" href="javascript:;"data-ng-click="logout()">logout</a>
                 </div>
-                <div class="col-md-3" id="wrapper" data-ng-if="isLoggedIn">
+                <div class="col-md-3" id="wrapper">
                     <accordion close-others="true">
                         <accordion-group heading="Best Practice">
                             <alert type="success">It's recommended to use the <strong>"directive definition object"</strong> form.</alert>
@@ -36,7 +36,7 @@
                         </accordion-group>
                     </accordion>
                 </div>
-                <div class="col-md-9" id="wrapper" data-ng-if="isLoggedIn">
+                <div class="col-md-9" id="wrapper">
                     <accordion close-others="true">
                         <accordion-group heading="Start">
 <pre class="ng-scope"><code class="lang-html"><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
@@ -141,7 +141,11 @@ myModule.directive('directiveName', function factory(injectables) {
                         <!-- FILTERS -->
                         <accordion-group heading="Filters">
                             <a href="https://docs.angularjs.org/api/ng/service/$filter">$filter</a>
-                            <filter-list ></filter-list>
+                            <filter-list >
+                                <div>
+                                    Conteudo
+                                </div>
+                            </filter-list>
                         </accordion-group>
                         <accordion-group heading="Q">
                         <p><a href="https://docs.angularjs.org/api/ng/service/$q">$q</a></p>
