@@ -37,6 +37,21 @@
                     </accordion>
                 </div>
                 <div class="col-md-9" id="wrapper">
+
+
+
+
+                    <div id="demoCustomFilter" data-ng-controller="itemsController">
+                        <h2>Demo Custom Filter</h2>
+                        <p data-ng-repeat="item in strings | retiraAspas:item">{{item}}</p>
+                    </div>
+                    <div>
+                        <h2>Demo DIrective</h2>
+                        <p retira-aspas-directive>'a'</p>
+                    </div>
+
+
+
                     <accordion close-others="true">
                         <accordion-group heading="Start">
 <pre class="ng-scope"><code class="lang-html"><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
@@ -387,6 +402,7 @@ app.directive('inactiveClasses', function () {
                         </accordion-group>
                     </accordion>
                 </div>
+                
             </article>
             <footer>
                 
@@ -396,5 +412,32 @@ app.directive('inactiveClasses', function () {
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
         <script src="ui-bootstrap-tpls-0.12.0.min.js"></script>
         <script src='page.js'></script>
+        <script>
+        var strings = ["'a'","'b'"]
+        angular.module('app')
+        .controller('itemsController',function($scope){
+            $scope.strings = strings
+        })
+        .directive('retiraAspasDirective',function(){
+            return {
+                restrict:'A',//E - Element, A - Attributs
+                link:function(scope,element,attr){
+                    
+                        element.text(element.text().replace(/'/gi,""))
+                    
+                }
+            }
+        })
+        .filter('retiraAspas',function(){
+            return function(items){
+                var newItems = []
+                for(var i=0,item;item = items[i];i++){
+                    item = item.replace(/'/gi,"")
+                    newItems.push(item)
+                }
+                return newItems
+            }
+        })
+        </script>
     </body>
 </html>
